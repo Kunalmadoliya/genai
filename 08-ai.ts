@@ -1,4 +1,4 @@
-import {checkOpenAI} from "./01-ai";
+import { checkOpenAI } from "./01-ai";
 import readline from "node:readline";
 
 const client = await checkOpenAI();
@@ -9,8 +9,11 @@ const rl = readline.createInterface({
   output: process.stdout,
 });
 
-const talkWithGpt = async (systemPrompt: string, userPrompt: string) => {
-  const stream = client.chat.completions.create({
+const talkWithGpt = async (
+  systemPrompt: string,
+  userPrompt: string
+) => {
+  const stream = await client.chat.completions.create({
     model,
     stream: true,
     messages: [
@@ -25,17 +28,17 @@ const talkWithGpt = async (systemPrompt: string, userPrompt: string) => {
     ],
   });
 
-  return stream;
+  for await (const chunk of stream) {
+    process.stdout.write(
+      chunk.choices[0]?.delta?.content || ""
+    );
+  }
+
+  console.log();
 };
-for await (const chunck of stream) {
-  const delta = await chunck.ch;
-}
 
-const user = "helloo";
+rl.question("What is your name? ", async (name) => {
+  await talkWithGpt("you are sde", name);
+  rl.close();
+});
 
-const response = await talkWithGpt("you are the backend developer", user);
-
-
-rl.question(user , ()=> {
-    console.log(response)
-})
