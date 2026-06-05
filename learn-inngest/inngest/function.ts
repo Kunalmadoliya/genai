@@ -26,13 +26,49 @@ export const onTodoDelete = inngest.createFunction(
     triggers: [{event: "todo/deleted"}],
   },
   async ({event, step, attempt}) => {
-    const id = event.data.todo.id;
-    await step.run("wait-to-delete", async () => {
+    const id = event.data.todos.id;
+    await step.run("checking-retry-mech", async () => {
       if (attempt === 0) {
         throw new Error(`Failed to deleted with id ${id}`);
       }
 
       return "cleaned up successfully";
     });
+
+    await step.run("wait-to-delete", async () => {
+      auditLog.push({
+        action: "deleted",
+        todoId: id,
+      });
+
+      return {ok: true};
+    });
+  },
+);
+
+export const onTodoUpdate = inngest.createFunction(
+  {
+    id: "on-todo-update",
+    triggers: [{event: "todo/update"}],
+  },
+  async ({event, step, attempt}) => {
+    const id = event.data.todos.id;
+
+    await step.run("checking-retry-mech", async () => {
+      if (attempt === 0) {
+        throw new Error(`Failed to update with id ${id}`);
+      }
+
+      return "Updated successfully";
+    });
+
+    await step.run("wait-to-update", async () => {
+      auditLog.push({
+        action: "updated",
+        updateId: id,
+      });
+    });
+
+    return {ok: true};
   },
 );

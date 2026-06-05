@@ -1,4 +1,4 @@
-export const auditLog = [] as any
+export const auditLog = [] as any;
 
 let nextId = 1;
 
@@ -17,13 +17,15 @@ export function addTodo(title: string) {
   return todo;
 }
 
-export function getTodo(id: Number) {
+export function getTodo(id: number) {
+
+  
   const findIndex = todos.find((todo) => todo.id === id);
 
   return findIndex;
 }
 
-export function updateTodo(id: Number, patch: Partial<todoData>) {
+export function updateTodo(id: number, patch: Partial<todoData>) {
   const findTodo = getTodo(id);
 
   if (!findTodo) return;
@@ -36,10 +38,12 @@ export function updateTodo(id: Number, patch: Partial<todoData>) {
     findTodo.completed = patch.completed;
   }
 
+
+
   return findTodo;
 }
 
-export function deleteTodo(id: Number) {
+export function deleteTodo(id: number) {
   const findTodo = todos.findIndex((todo) => todo.id === id);
 
   if (findTodo === -1) return;
