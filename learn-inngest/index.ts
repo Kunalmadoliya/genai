@@ -1,13 +1,24 @@
+import "dotenv/config";
 import express from "express";
 
-import { todos, addTodo } from "./store";
+import {todos, addTodo} from "./store";
+import {serve} from "inngest/express";
+import {inngest} from "./inngest/client";
+import {onTodoCreated} from "./inngest/function";
 
 const app = express();
 
 app.use(express.json());
+app.use(
+  "/api/inngest",
+  serve({
+    client: inngest,
+    functions: [onTodoCreated],
+  }),
+);
 
-app.post("/todos", (req, res) => {
-  const { title } = req.body;
+app.post("/todos", async (req, res) => {
+  const {title} = req.body;
 
   if (!title || typeof title !== "string") {
     return res.status(400).json({
@@ -16,6 +27,14 @@ app.post("/todos", (req, res) => {
   }
 
   const todo = addTodo(title);
+
+  await inngest.send({
+    name: "todo/created",
+    data: {todo},
+  });
+
+  console.log(title);
+  
 
   return res.status(201).json({
     message: "Todo created successfully",

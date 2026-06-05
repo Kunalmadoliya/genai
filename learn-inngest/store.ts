@@ -1,4 +1,4 @@
-export const store = [];
+export const auditLog = [] as any
 
 let nextId = 1;
 
