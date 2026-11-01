@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Todo App</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="container">
+      <header class="header">
+        <h1>Todo</h1>
+        <form id="todo-form" autocomplete="off">
+          <input
+            id="todo-input"
+            type="text"
+            placeholder="What needs to be done?"
+            aria-label="New todo"
+          />
+          <button type="submit" class="btn primary">Add</button>
+        </form>
+      </header>
+
+      <section class="controls">
+        <div class="filters" role="tablist" aria-label="Filters">
+          <button class="filter active" data-filter="all" aria-selected="true">
+            All
+          </button>
+          <button class="filter" data-filter="active" aria-selected="false">
+            Active
+          </button>
+          <button class="filter" data-filter="completed" aria-selected="false">
+            Completed
+          </button>
+        </div>
+        <button
+          id="clear-completed"
+          class="btn subtle"
+          title="Remove completed todos"
+        >
+          Clear completed
+        </button>
+      </section>
+
+      <ul
+        id="todo-list"
+        class="list"
+        aria-live="polite"
+        aria-label="Todo list"
+      ></ul>
+
+      <footer class="footer">
+        <span id="items-left">0 items left</span>
+        <button id="toggle-all" class="btn subtle" title="Toggle all items">
+          Toggle all
+        </button>
+      </footer>
+    </main>
+
+    <template id="todo-item-template">
+      <li class="item">
+        <label class="checkbox">
+          <input type="checkbox" class="toggle" />
+          <span class="check"></span>
+        </label>
+        <span class="title" contenteditable="false"></span>
+        <div class="actions">
+          <button class="edit btn subtle" title="Edit">Edit</button>
+          <button class="delete btn danger" title="Delete">Delete</button>
+        </div>
+      </li>
+    </template>
+
+    <script src="app.js"></script>
+  </body>
+</html>

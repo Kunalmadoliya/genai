@@ -1,0 +1,108 @@
+:root{
+  --bg:#f8fafc;
+  --surface:#ffffff;
+  --text:#0f172a;
+  --muted:#64748b;
+  --border:#e2e8f0;
+  --accent:#2563eb;/* blue */
+  --accent-600:#1d4ed8;
+  --danger:#ef4444;/* red */
+  --danger-600:#dc2626;
+  --shadow:0 10px 30px rgba(2,6,23,.08);
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,"Apple Color Emoji","Segoe UI Emoji";
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.5;
+}
+.container{
+  max-width:720px;
+  margin:40px auto;
+  padding:24px;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:12px;
+  box-shadow:var(--shadow);
+}
+.header h1{
+  margin:0 0 16px 0;
+  font-size:28px;
+  font-weight:700;
+}
+#todo-form{display:flex;gap:12px}
+#todo-input{
+  flex:1;
+  padding:12px 14px;
+  font-size:16px;
+  border:1px solid var(--border);
+  border-radius:8px;
+  background:#fff;
+}
+#todo-input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(37,99,235,.15)}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  gap:8px;
+  padding:10px 14px;
+  font-size:14px;
+  border-radius:8px;
+  border:1px solid transparent;
+  background:#f1f5f9;
+  color:var(--text);
+  cursor:pointer;
+  transition:.15s ease-in-out;
+}
+.btn:focus{outline:none;box-shadow:0 0 0 3px rgba(37,99,235,.18)}
+.btn.primary{background:var(--accent);color:#fff}
+.btn.primary:hover{background:var(--accent-600)}
+.btn.subtle{background:#eef2f7;color:#1f2937}
+.btn.subtle:hover{background:#e5eaf1}
+.btn.danger{background:#fee2e2;color:#7f1d1d;border-color:#fecaca}
+.btn.danger:hover{background:#fecaca;color:#7f1d1d}
+.btn:disabled{opacity:.6;cursor:not-allowed}
+
+.controls{
+  margin:18px 0;
+  display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;
+}
+.filters{display:flex;gap:8px}
+.filter{
+  padding:8px 12px;
+  border-radius:20px;
+  border:1px solid var(--border);
+  background:#fff;
+  color:#334155;
+  cursor:pointer;
+}
+.filter:hover{border-color:#cbd5e1}
+.filter.active{border-color:var(--accent);color:var(--accent);background:#eef2ff00}
+
+.list{list-style:none;margin:0;padding:0;border-top:1px solid var(--border);}
+.item{
+  display:flex;align-items:center;gap:12px;
+  padding:12px 4px;
+  border-bottom:1px solid var(--border);
+}
+.checkbox{position:relative;display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px}
+.checkbox input{position:absolute;inset:0;margin:0;opacity:0;cursor:pointer}
+.checkbox .check{
+  width:18px;height:18px;border:2px solid var(--muted);border-radius:4px;display:inline-block;
+  transition:.15s ease-in-out;background:#fff;
+}
+.item.completed .checkbox .check{background:var(--accent);border-color:var(--accent)}
+.title{flex:1;min-width:0;word-break:break-word}
+.item.completed .title{color:var(--muted);text-decoration:line-through}
+.actions{display:flex;gap:8px}
+.item.editing .title{outline:2px solid rgba(37,99,235,.25);background:#f8fafc;border-radius:6px;padding:2px 4px}
+
+.footer{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:12px;color:var(--muted);font-size:14px}
+
+@media (max-width:600px){
+  .container{margin:16px;padding:16px}
+  #todo-form{flex-direction:column}
+  .controls{flex-direction:column;align-items:stretch}
+  .filters{justify-content:space-between}
+}
