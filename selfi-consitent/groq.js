@@ -1,5 +1,4 @@
 import "dotenv/config";
-import Groq from "groq-sdk";
 import OpenAI from "openai";
 
 const groq = new OpenAI({
@@ -7,9 +6,9 @@ const groq = new OpenAI({
   baseURL: "https://api.groq.com/openai/v1",
 });
 
-async function main(prompt) {
+export async function groqClient(prompt) {
   try {
-    const response = await groq.chat.completions.create({
+    const stream = await groq.chat.completions.create({
       model: "openai/gpt-oss-20b",
       messages: [
         {
@@ -17,15 +16,17 @@ async function main(prompt) {
           content: prompt,
         },
       ],
+      stream: true,
     });
 
-    console.log(response.choices[0]?.message?.content || "");
+    let responseContent = "";
+
+    for await (const chunk of stream) {
+     responseContent += chunk.choices[0]?.delta?.content || "";
+    }
+    return responseContent;
   } catch (error) {
     console.error(error);
   }
 }
 
-main("Tell me a fun fact about the moon in one sentence.").catch((error) => {
-  console.error(error);
-  process.exit(1);
-});
