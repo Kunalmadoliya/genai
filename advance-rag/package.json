@@ -1,0 +1,18 @@
+{
+  "name": "advance-rag",
+  "module": "index.ts",
+  "type": "module",
+  "private": true,
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "bullmq": "^6.7.2",
+    "dotenv": "^18.0.10",
+    "express": "^5.3.0",
+    "multer": "^2.5.0"
+  }
+}
